@@ -7,6 +7,9 @@ export const receipt = {
   seed: 67,
 };
 
+let pic = null;
+let picBad = false;
+
 export function drawReceipt(p) {
   const { width: w, height: h } = p;
   const margin = 24;
@@ -26,6 +29,25 @@ export function drawReceipt(p) {
   p.stroke(0);
   p.strokeWeight(2);
   p.line(margin, 74, w - margin, 74);
+
+  if (!pic) {
+    pic = new Image();
+    pic.onload = () => p.redraw();
+    pic.onerror = () => {
+      picBad = true;
+      p.redraw();
+    };
+    pic.src = new URL("./assets/pic.png", import.meta.url).href;
+  }
+  if (picBad) throw new Error("pic did not load");
+  if (pic.complete && pic.naturalWidth) {
+    const top = 86;
+    const bot = h - 162;
+    const size = Math.min(w, bot - top);
+    const x = (w - size) / 2;
+    const y = top + (bot - top - size) / 2;
+    p.drawingContext.drawImage(pic, x, y, size, size);
+  }
 
   dashedLine(p, margin, h - 150, w - margin, h - 150, 6, 5);
 
