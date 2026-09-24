@@ -45,9 +45,9 @@ export function drawReceipt(p) {
     const sy = 120;
     const sw = 800;
     const sh = 1160;
-    const scale = w / pic.naturalWidth;
-    const dw = sw * scale;
-    const dh = sh * scale;
+    const inset = 8;
+    const dw = w - inset * 2;
+    const dh = sh * (dw / sw);
     const top = 86;
     const bot = h - 162;
     const x = (w - dw) / 2;
@@ -62,7 +62,7 @@ export function drawReceipt(p) {
       for (let xx = x0; xx < x0 + s; xx++) {
         const i = 4 * (yy * w + xx);
         const lum = 0.299 * p.pixels[i] + 0.587 * p.pixels[i + 1] + 0.114 * p.pixels[i + 2];
-        const v = lum < 110 ? 0 : 255;
+        const v = lum < 200 ? 0 : 255;
         p.pixels[i] = v;
         p.pixels[i + 1] = v;
         p.pixels[i + 2] = v;
