@@ -47,6 +47,21 @@ export function drawReceipt(p) {
     const x = (w - size) / 2;
     const y = top + (bot - top - size) / 2;
     p.drawingContext.drawImage(pic, x, y, size, size);
+    p.loadPixels();
+    const x0 = Math.floor(x);
+    const y0 = Math.floor(y);
+    const s = Math.floor(size);
+    for (let yy = y0; yy < y0 + s; yy++) {
+      for (let xx = x0; xx < x0 + s; xx++) {
+        const i = 4 * (yy * w + xx);
+        const lum = 0.299 * p.pixels[i] + 0.587 * p.pixels[i + 1] + 0.114 * p.pixels[i + 2];
+        const v = lum < 110 ? 0 : 255;
+        p.pixels[i] = v;
+        p.pixels[i + 1] = v;
+        p.pixels[i + 2] = v;
+      }
+    }
+    p.updatePixels();
   }
 
   dashedLine(p, margin, h - 150, w - margin, h - 150, 6, 5);
