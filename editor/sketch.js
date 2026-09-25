@@ -4,7 +4,7 @@ import JsBarcode from "jsbarcode";
 
 export const receipt = {
   height: 1080, // 240–2000 px. Width is fixed by the printer.
-  seed: 67,
+  seed: 69,
 };
 
 let pic = null;
