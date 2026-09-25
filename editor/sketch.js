@@ -25,6 +25,9 @@ export function drawReceipt(p) {
   p.textStyle(p.BOLD);
   p.textSize(18);
   p.text("ATHANNN", w - margin, 36);
+  p.textStyle(p.NORMAL);
+  p.textSize(11);
+  p.text("My Portrait", w - margin, 56);
 
   p.stroke(0);
   p.strokeWeight(2);
@@ -70,6 +73,39 @@ export function drawReceipt(p) {
     }
     p.updatePixels();
   }
+
+  p.fill(0);
+  for (let i = 0; i < 190; i++) {
+    const px = p.random(margin, w - margin);
+    const py = i < 120 ? p.random(88, h - 168) : p.random(168, 420);
+    if (py > 88 && py < 190 && px > 48 && px < w - 48) continue;
+    if (px > 16 && px < 368 && py > 236 && py < 784) continue;
+    const big = p.random();
+    if (big > 0.74) {
+      const arm = 3 + p.random(6);
+      p.stroke(0);
+      p.strokeWeight(big > 0.93 ? 2 : 1);
+      p.line(px - arm, py, px + arm, py);
+      p.line(px, py - arm, px, py + arm);
+      p.line(px - arm * 0.55, py - arm * 0.55, px + arm * 0.55, py + arm * 0.55);
+      p.line(px - arm * 0.55, py + arm * 0.55, px + arm * 0.55, py - arm * 0.55);
+      p.noStroke();
+      p.circle(px, py, big > 0.93 ? 4 : 2.2);
+    } else {
+      p.noStroke();
+      p.circle(px, py, big > 0.45 ? 2.8 : 1.5);
+    }
+  }
+
+  p.noStroke();
+  p.fill(0);
+  p.textFont("monospace");
+  p.textAlign(p.CENTER, p.CENTER);
+  p.textStyle(p.BOLD);
+  p.textSize(24);
+  p.text("THE BEST", w / 2, 108);
+  p.textSize(40);
+  p.text("STARDANCER", w / 2, 160);
 
   dashedLine(p, margin, h - 150, w - margin, h - 150, 6, 5);
 
