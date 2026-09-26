@@ -45,10 +45,18 @@ export function drawReceipt(p) {
   if (!pic.complete) pic.onload = () => p.redraw();
   if (picBad) throw new Error("pic did not load");
   if (pic.complete && pic.naturalWidth) {
-    const sx = 250;
-    const sy = 120;
-    const sw = 800;
-    const sh = 1160;
+    const iw = pic.naturalWidth;
+    const ih = pic.naturalHeight;
+    let sx = (iw * 250 / 1280) | 0;
+    let sy = (ih * 120 / 1280) | 0;
+    let sw = (iw * 800 / 1280) | 0;
+    let sh = (ih * 1160 / 1280) | 0;
+    if (sw < 8 || sh < 8) {
+      sx = 0;
+      sy = 0;
+      sw = iw;
+      sh = ih;
+    }
     const inset = 8;
     const dw = w - inset * 2;
     const dh = sh * (dw / sw);
